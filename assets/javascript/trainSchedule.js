@@ -1,10 +1,13 @@
 var provider = new firebase.auth.GithubAuthProvider();
-firebase.auth().signInWithPopup(provider).then(function(result) {
-  // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-  var token = result.credential.accessToken;
+
+firebase.auth().getRedirectResult().then(function(result) {
+  if (result.credential) {
+    // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+    var token = result.credential.accessToken;
+    // ...
+  }
   // The signed-in user info.
   var user = result.user;
-  // ...
 }).catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
@@ -16,7 +19,6 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
   // ...
 });
 
-
   var config = {
     apiKey: "AIzaSyBB7-HCnEi21ox3JuxWgjIHCmfFnUgPGBI",
     authDomain: "train-schedule-66db2.firebaseapp.com",
@@ -25,6 +27,14 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
     messagingSenderId: "743138719065"
   };
   firebase.initializeApp(config);
+
+  // var provider = new firebase.auth.GithubAuthProvider();
+  
+
+
+
+
+
 
   var trnObject = {};
   var database = firebase.database();
