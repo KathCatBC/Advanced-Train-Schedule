@@ -36,3 +36,10 @@
 #addTrain-btn {
 	float: right;
 }
+
+
+#deleteTrain-btn {
+	clear: both;
+	float: left;
+}
+

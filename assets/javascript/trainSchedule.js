@@ -1,3 +1,21 @@
+var provider = new firebase.auth.GithubAuthProvider();
+firebase.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+  // ...
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
+
 
   var config = {
     apiKey: "AIzaSyBB7-HCnEi21ox3JuxWgjIHCmfFnUgPGBI",
@@ -8,7 +26,9 @@
   };
   firebase.initializeApp(config);
 
+  var trnObject = {};
   var database = firebase.database();
+  $("#editTrain").hide();
 
 $("#addTrain-btn").on("click", function(event) {   
 
@@ -37,7 +57,6 @@ $("#addTrain-btn").on("click", function(event) {
 
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
-    var trnName = childSnapshot.val().name;
     var trnName = childSnapshot.val().route;
     var trnDest = childSnapshot.val().dest;
     var trnStart = childSnapshot.val().start
@@ -46,7 +65,9 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     var trnWait = waitTrainCalc(trnNext);    
 
     $("#trainTable > tbody").append("<tr><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+
 });
+
 
 function nextTrainCalc(firstTrain, scheduled) {
 
@@ -89,7 +110,6 @@ function updateboard(){
   database.ref().once('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
 
-      var trnName = childSnapshot.val().name;
       var trnName = childSnapshot.val().route;
       var trnDest = childSnapshot.val().dest;
       var trnStart = childSnapshot.val().start
@@ -101,3 +121,57 @@ function updateboard(){
     });
   });
 };
+
+// $("#editSch").on("click", function(event) {
+  
+//   var trnArr = [];
+
+//   $("#addTrain").hide();
+//   $("#editTrain").show();
+//   $("#editSch").hide();
+//    database.ref().once('value', function(snapshot) {
+//     snapshot.forEach(function(childSnapshot) {
+      
+//       var trnKey = database.ref().child('posts').push().key;
+//       var trnName = childSnapshot.val().route;
+//       var trnDest = childSnapshot.val().dest;
+//       var trnStart = childSnapshot.val().start;
+//       var trnFreq = childSnapshot.val().freq
+      
+//       $('<option>').val(trnKey).text(trnName).appendTo('#trainNameEdit');
+     
+//       var trnKey = {};
+//       var keyObj = "key": trnKey, {"route": trnName,"dest": trnDest,"start": trnStart,"freq": trnFreq}
+//       trnArr.push(keyObj);
+//       console.log(trnObj);
+
+//       });
+
+    
+//     });
+
+
+//       $("#trainNameEdit").on("click", function(event) {
+
+//         var selectedKey = $("#trainNameEdit option:selected").val();
+//         var selectedName = $("#trainNameEdit option:selected").text();
+
+//         console.log("key selected = " + selectedKey);
+//         console.log("name selected = " + selectedName);
+
+//         // $("#trainName")=database.trnKey().val().route;
+//         $("#trainDestination").val(database.val(selectedKey).dest);
+//     // var trnStart = moment($("#trainFirstTime").val().trim(), "HH:mm").format("HH:mm");
+//     // var trnFreq = $("#trainFrequency").val().trim();
+
+
+
+
+// })
+
+  // $("#addTrain").show();
+  // $("#editTrain").hide();
+  // $("#editSch").show();
+
+
+// });

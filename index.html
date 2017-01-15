@@ -35,17 +35,19 @@
                         <th>Frequency (min)</th>
                         <th>Next Train</th>
                         <th>Minutes Away</th>
+                        <!-- <th>Edit Schedule</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <!-- body is populated from database -->
                 </tbody>
             </table> 
+            <a href="#" class="btn btn-info btn-xs" id="editSch">Edit Train Schedule</a>
         </div>
     </div>
 
 
-    <div class="panel panel-primary primary-panel-style">
+    <div class="panel panel-primary primary-panel-style" id="addTrain">
         <div class="panel-heading">
             <h4 class="panel-title">Add Trains</h4>
         </div>
@@ -69,6 +71,36 @@
                     <input class="input-style col-md-6" id="trainFrequency" type="text">
                     <a href="#" class="btn btn-primary btn-sm col-md-1 col-md-offset-1" id="addTrain-btn">Submit</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-warning primary-panel-style" id="editTrain">
+        <div class="panel-heading">
+            <h4 class="panel-title">Change Train Schedule</h4>
+        </div>
+        <div class="panel-body">
+
+            <div class="form-group container-fluid">
+                <div class="row">
+                    <label class ="label-align col-md-3">Train Name:</label>
+                    <select class="input-style col-md-6" id="trainNameEdit" type="select"></select>
+                </div>
+                <div class="row">
+                    <label class="label-align col-md-3">Destination:</label>
+                    <input class="input-style col-md-6" id="trainDestinationEdit" type="text">
+                </div>
+                <div class="row">
+                    <label class="label-align col-md-3">First Train Time (HH:mm):</label>
+                    <input class="input-style col-md-6" id="trainFirstTimeEdit" type="text" value="HH:mm military time">
+                </div>
+                <div class="row">
+                    <label class="label-align col-md-3" for="focusedInput">Frequency (min): </label>
+                    <input class="input-style col-md-6" id="trainFrequencyEdit" type="text">
+                </div>
+                <a href="#" class="btn btn-danger btn-sm col-md-2" id="deleteTrain-btn">Delete This Train</a>
+                <a href="#" class="btn btn-warning btn-sm col-md-2" id="cancelEdit">Cancel</a>
+                <a href="#" class="btn btn-primary btn-sm col-md-2 col-md-offset-1" id="updateTrain-btn">Update</a>
             </div>
         </div>
     </div>
