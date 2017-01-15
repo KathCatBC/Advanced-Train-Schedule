@@ -1,4 +1,16 @@
-var provider = new firebase.auth.GithubAuthProvider();
+
+
+  var config = {
+    apiKey: "AIzaSyBB7-HCnEi21ox3JuxWgjIHCmfFnUgPGBI",
+    authDomain: "train-schedule-66db2.firebaseapp.com",
+    databaseURL: "https://train-schedule-66db2.firebaseio.com",
+    storageBucket: "train-schedule-66db2.appspot.com",
+    messagingSenderId: "743138719065"
+  };
+  firebase.initializeApp(config);
+
+  // var provider = new firebase.auth.GithubAuthProvider();
+  var provider = new firebase.auth.GithubAuthProvider();
 
 firebase.auth().getRedirectResult().then(function(result) {
   console.log("authorization")
@@ -23,18 +35,6 @@ firebase.auth().getRedirectResult().then(function(result) {
   var credential = error.credential;
   // ...
 });
-
-  var config = {
-    apiKey: "AIzaSyBB7-HCnEi21ox3JuxWgjIHCmfFnUgPGBI",
-    authDomain: "train-schedule-66db2.firebaseapp.com",
-    databaseURL: "https://train-schedule-66db2.firebaseio.com",
-    storageBucket: "train-schedule-66db2.appspot.com",
-    messagingSenderId: "743138719065"
-  };
-  firebase.initializeApp(config);
-
-  // var provider = new firebase.auth.GithubAuthProvider();
-  
 
 
 
