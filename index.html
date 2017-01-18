@@ -82,9 +82,14 @@
         <div class="panel-body">
 
             <div class="form-group container-fluid">
+                <div class = "row">
+                    <label class ="label-align col-md-3">Select a train to edit:</label>
+                    <select class="input-style col-md-6" id="trainNameSelect" type="select"></select>
+                </div>
+                <br>
                 <div class="row">
                     <label class ="label-align col-md-3">Train Name:</label>
-                    <select class="input-style col-md-6" id="trainNameEdit" type="select"></select>
+                    <input class="input-style col-md-6" id="trainNameEdit" type="text"></select>
                 </div>
                 <div class="row">
                     <label class="label-align col-md-3">Destination:</label>
@@ -98,9 +103,10 @@
                     <label class="label-align col-md-3" for="focusedInput">Frequency (min): </label>
                     <input class="input-style col-md-6" id="trainFrequencyEdit" type="text">
                 </div>
+                <br>
                 <a href="#" class="btn btn-danger btn-sm col-md-2" id="deleteTrain-btn">Delete This Train</a>
-                <a href="#" class="btn btn-warning btn-sm col-md-2" id="cancelEdit">Cancel</a>
                 <a href="#" class="btn btn-primary btn-sm col-md-2 col-md-offset-1" id="updateTrain-btn">Update</a>
+                <a href="#" class="btn btn-warning btn-sm col-md-2 col-md-offset-1" id="cancelEdit-btn">Cancel</a>    
             </div>
         </div>
     </div>

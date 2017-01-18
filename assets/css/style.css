@@ -37,9 +37,14 @@
 	float: right;
 }
 
-
 #deleteTrain-btn {
-	clear: both;
 	float: left;
 }
 
+#updateTrain-btn {
+	float: center;
+}
+
+#cancelEdit-btn {
+	float: left;
+}
