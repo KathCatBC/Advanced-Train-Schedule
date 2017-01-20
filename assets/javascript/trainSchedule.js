@@ -37,7 +37,7 @@ $("#sign-out-btn").on("click", function(event) {
 
 })      
 
-firebase.auth().onAuthStateStateChanged(firebaseUser => {
+firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         $("#sign-out-btn").show();
         $("#sign-up-btn").hide();
