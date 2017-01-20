@@ -34,7 +34,15 @@ $("#sign-up-btn").on("click", function(event) {
 
 $("#sign-out-btn").on("click", function(event) {
     firebase.auth().signOut();
-
+    $("log-in-panel").show();
+    $(".schedule-panel").hide();
+    $("#addTrain").hide();
+    $("#editTrain").hide();
+    $("#msgModal").hide();
+    $("#modal-message").text("Log out successful.")
+    $("#no-btn").hide();
+    $("#yes-btn").hide();
+    $("#msgModal").modal("show");
 })      
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
@@ -44,18 +52,21 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         $("#sign-in-btn").hide();
         $(".schedule-panel").show();
         $("#addTrain").show();
+        $("#log-in-panel").hide();
+        // need to put log out button somewhere
+        $("#modal-message").text("You have successfully logged in.")
+        $("#no-btn").hide();
+        $("#yes-btn").hide();
+        $("#msgModal").modal("show");
         console.log(firebaseUser);
     } else {
+        // $("#modal-message").text("There was a login error.  Please try again.")
+        // $("#no-btn").hide();
+        // $("#yes-btn").hide();
+        // $("#msgModal").modal("show");
         console.log("not logged in")
     }
 })
-
-// const auth = firebase.auth();
-// auth.signInWithEmailAndPassword(email, pass);
-// auth.createUserWithEmailAndPassword(email, pass);
-// auth.onAuthStateStateChanged(firebaseUser => {})
-
-
 
 
 var trnObject = {};
@@ -209,6 +220,7 @@ function editsch(keyStuff) {
 
     $("#deleteTrain-btn").on("click", function(event) {     
         $("#modal-message").text("Are you sure you want to delete train " + tempTrain[1] +"?")
+        $("#ok-btn").hide();
         $("#msgModal").modal("show");
 
         $("#yes-btn").on("click", function(event) {
