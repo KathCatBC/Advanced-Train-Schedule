@@ -33,7 +33,7 @@ $("#sign-up-btn").on("click", function(event) {
 });
 
 $("#sign-out-btn").on("click", function(event) {
-    firebase.auth().signout();
+    firebase.auth().signOut();
 
 })      
 
