@@ -24,6 +24,38 @@
 
     <div class="panel panel-primary primary-panel-style">
         <div class="panel-heading">
+            <h4 class="panel-title">Sign In</h4>
+        </div>
+        <div class="panel-body"> 
+
+            <fieldset>
+                <div class="form-group">
+                    <div class = "row">
+                        <label for="inputEmail" class="col-md-3 control-label label-align">Email</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <label for="inputPassword" class="col-md-3 control-label label-align">Password</label>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class = "row center-align">
+                    <a href="#" class="btn btn-default btn-sm" id="sign-in-btn">Sign In</a>
+                    <a href="#" class="btn btn-primary btn-sm" id="sign-up-btn">Sign Up</a>
+                    <a href="#" class="btn btn-success btn-sm" id="sign-out-btn">Sign Out</a>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    
+
+    <div class="panel panel-primary primary-panel-style schedule-panel">
+        <div class="panel-heading">
             <h4 class="panel-title">Train Schedule</h4>
         </div>
         <div class="panel-body"> 
@@ -101,9 +133,11 @@
                     <input class="input-style col-md-6" id="trainFrequencyEdit" type="text">
                 </div>
                 <br>
-                <a href="#" class="btn btn-danger btn-sm col-md-2" id="deleteTrain-btn">Delete This Train</a>
-                <a href="#" class="btn btn-primary btn-sm col-md-2 col-md-offset-1" id="updateTrain-btn">Update</a>
-                <a href="#" class="btn btn-warning btn-sm col-md-2 col-md-offset-1" id="cancelEdit-btn">Cancel</a>    
+                <div class ="row center-align">
+                    <a href="#" class="btn btn-danger btn-sm" id="deleteTrain-btn">Delete This Train</a>
+                    <a href="#" class="btn btn-primary btn-sm" id="updateTrain-btn">Update</a>
+                    <a href="#" class="btn btn-warning btn-sm" id="cancelEdit-btn">Cancel</a>
+                </div>    
             </div>
         </div>
     </div>

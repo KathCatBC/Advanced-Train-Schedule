@@ -10,10 +10,56 @@ var config = {
 
 firebase.initializeApp(config);
 
-var trnObject = {};
-var database = firebase.database();
+$(".schedule-panel").hide();
+$("#addTrain").hide();
 $("#editTrain").hide();
 $("#msgModal").hide();
+
+
+$("#sign-in-btn").on("click", function(event) {
+    const txtEmail = $("#inputEmail").val();
+    const txtPass = $("#inputPassword").val();
+    const auth = firebase.auth();
+    const promise = auth.signInWithEmailAndPassword(txtEmail, txtPass);
+    promise.catch(e => console.log(e.message));
+});   
+
+$("#sign-up-btn").on("click", function(event) {
+    const txtEmail = $("#inputEmail").val();
+    const txtPass = $("#inputPassword").val();
+    const auth = firebase.auth();
+    const promise = auth.createUserWithEmailAndPassword(txtEmail, txtPass);
+    promise.catch(e => console.log(e.message));
+});
+
+$("#sign-out-btn").on("click", function(event) {
+    firebase.auth().signout();
+
+})      
+
+firebase.auth().onAuthStateStateChanged(firebaseUser => {
+    if (firebaseUser) {
+        $("#sign-out-btn").show();
+        $("#sign-up-btn").hide();
+        $("#sign-in-btn").hide();
+        $(".schedule-panel").show();
+        $("#addTrain").show();
+        console.log(firebaseUser);
+    } else {
+        console.log("not logged in")
+    }
+})
+
+// const auth = firebase.auth();
+// auth.signInWithEmailAndPassword(email, pass);
+// auth.createUserWithEmailAndPassword(email, pass);
+// auth.onAuthStateStateChanged(firebaseUser => {})
+
+
+
+
+var trnObject = {};
+var database = firebase.database();
 
 
 $("#addTrain-btn").on("click", function(event) {   
@@ -54,7 +100,6 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
 
     $(".btn-edit").on("click", function() { 
-        console.log("edit train - child added")
         var editTrainParam = $(this).context.id
         editsch(editTrainParam) 
     });
@@ -78,6 +123,7 @@ function nextTrainCalc(firstTrain, scheduled) {
 
 }   // end of nexTrainCalc
 
+
 function waitTrainCalc(waiting) {
 
     var now = moment().format("HH:mm")
@@ -94,8 +140,8 @@ function waitTrainCalc(waiting) {
 
 }  // end of waitTrainCalc
 
-
 setInterval(function() {updateboard()}, 1000*60);  // wait a minute to update wait time
+
 
 function updateboard(){
 
@@ -117,7 +163,6 @@ function updateboard(){
     });
 
     $(".btn-edit").on("click", function() { 
-        console.log("edit train updateboard");
         var editTrainParam = $(this).context.id;
         editsch(editTrainParam) ;
     });
@@ -127,7 +172,6 @@ function updateboard(){
 
 function editsch(keyStuff) {
 
-    console.log("editsch")
     var tempTrain = keyStuff.split(",")
    
     $("#addTrain").hide();
@@ -144,8 +188,6 @@ function editsch(keyStuff) {
 
 
     $("#updateTrain-btn").on("click", function(event) { 
-
-        console.log("update clicked")
         
         var trnName = $("#trainNameEdit").val().trim();
         var trnDest = $("#trainDestinationEdit").val().trim();
