@@ -1,4 +1,5 @@
   // Initialize Firebase
+
 var config = {
     apiKey: "AIzaSyB5Bhg1V-_IWl8Irz5MNtsx_odFUCmf1So",
     authDomain: "advanced-train-schedule.firebaseapp.com",
@@ -53,6 +54,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
 
     $(".btn-edit").on("click", function() { 
+        console.log("edit train - child added")
         var editTrainParam = $(this).context.id
         editsch(editTrainParam) 
     });
@@ -115,8 +117,9 @@ function updateboard(){
     });
 
     $(".btn-edit").on("click", function() { 
-        var editTrainParam = $(this).context.id
-        editsch(editTrainParam) 
+        console.log("edit train updateboard");
+        var editTrainParam = $(this).context.id;
+        editsch(editTrainParam) ;
     });
 
 };  // end of updateboard
@@ -124,6 +127,7 @@ function updateboard(){
 
 function editsch(keyStuff) {
 
+    console.log("editsch")
     var tempTrain = keyStuff.split(",")
    
     $("#addTrain").hide();
@@ -135,26 +139,31 @@ function editsch(keyStuff) {
     selectedKey = tempTrain[0]
                     
     $("#cancelEdit-btn").on("click", function(event) {  // changed my mind don't want to edit
-        $("#trainNameEdit").val("")
-        $("#trainDestinationEdit").val("");
-        $("#trainFirstTimeEdit").val("");
-        $("#trainFrequencyEdit").val("");
-        $("#addTrain").show();
-        $("#editTrain").hide();
+        cleanupeditdiv();  
     });  // end cancelEdit
 
-            // $("#updateTrain-btn").on("click", function(event){  
 
-            //   console.log("edit the train data")
+    $("#updateTrain-btn").on("click", function(event) { 
 
-            //   var newTrain = {
-            //     route: trnName,
-            //     dest: trnDest,
-            //     start: trnStart,
-            //     freq: trnFreq
-            //   };
+        console.log("update clicked")
+        
+        var trnName = $("#trainNameEdit").val().trim();
+        var trnDest = $("#trainDestinationEdit").val().trim();
+        var trnStart = moment($("#trainFirstTimeEdit").val().trim(), "HH:mm").format("HH:mm");
+        var trnFreq = $("#trainFrequencyEdit").val().trim();
 
-            // });  // end update train
+        firebase.database().ref(selectedKey).set({
+            route: trnName,
+            dest: trnDest,
+            start: trnStart,
+            freq: trnFreq
+        });
+
+        updateboard()
+        cleanupeditdiv()
+
+    });  // end update train
+
 
     $("#deleteTrain-btn").on("click", function(event) {     
         $("#modal-message").text("Are you sure you want to delete train " + tempTrain[1] +"?")
@@ -162,13 +171,19 @@ function editsch(keyStuff) {
 
         $("#yes-btn").on("click", function(event) {
             database.ref().child(selectedKey).remove(); 
-            $("#trainNameEdit").val("");
-            $("#trainDestinationEdit").val("");
-            $("#trainFirstTimeEdit").val("");
-            $("#trainFrequencyEdit").val("");
-            updateboard()
+            updateboard();
+            cleanupeditdiv();
         });
    
     });  // end of delete train on click event
-    
+
   }  // end of train edit function
+
+  function cleanupeditdiv () {  // empty the edit fields and hide the div
+    $("#trainNameEdit").val("")
+    $("#trainDestinationEdit").val("");
+    $("#trainFirstTimeEdit").val("");
+    $("#trainFrequencyEdit").val("");
+    $("#addTrain").show();
+    $("#editTrain").hide();
+  }
