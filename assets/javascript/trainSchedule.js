@@ -14,7 +14,8 @@ $(".schedule-panel").hide();
 $("#addTrain").hide();
 $("#editTrain").hide();
 $("#msgModal").hide();
-
+$(".logout-panel").hide();
+debugger
 
 $("#sign-in-btn").on("click", function(event) {
     const txtEmail = $("#inputEmail").val();
@@ -53,17 +54,22 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         $(".schedule-panel").show();
         $("#addTrain").show();
         $("#log-in-panel").hide();
-        // need to put log out button somewhere
         $("#modal-message").text("You have successfully logged in.")
         $("#no-btn").hide();
         $("#yes-btn").hide();
         $("#msgModal").modal("show");
+        $(".logout-panel").show();
+
+
         console.log(firebaseUser);
+        
     } else {
-        // $("#modal-message").text("There was a login error.  Please try again.")
-        // $("#no-btn").hide();
-        // $("#yes-btn").hide();
-        // $("#msgModal").modal("show");
+        $(".schedule-panel").hide();
+        $("#addTrain").hide();
+        $("#editTrain").hide();
+        $("#msgModal").hide();
+        $(".logout-panel").hide();
+      
         console.log("not logged in")
     }
 })
