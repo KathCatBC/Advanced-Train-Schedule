@@ -22,7 +22,7 @@ $("#sign-in-btn").on("click", function(event) {
     const txtPass = $("#inputPassword").val();
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(txtEmail, txtPass);
-    promise.catch(e => console.log(e.message));
+    promise.catch(e => console.log(e.message + "sign in button"));
 });   
 
 $("#sign-up-btn").on("click", function(event) {
@@ -35,7 +35,7 @@ $("#sign-up-btn").on("click", function(event) {
 
 $("#sign-out-btn").on("click", function(event) {
     firebase.auth().signOut();
-    $("log-in-panel").show();
+    $("#log-in-panel").show();
     $(".schedule-panel").hide();
     $("#addTrain").hide();
     $("#editTrain").hide();
@@ -62,7 +62,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 
         console.log(firebaseUser);
-        
+
     } else {
         $(".schedule-panel").hide();
         $("#addTrain").hide();
