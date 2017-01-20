@@ -10,36 +10,11 @@
   };
   firebase.initializeApp(config);
 
-// var provider = new firebase.auth.GithubAuthProvider();
-
-// firebase.auth().signInWithPopup(provider).then(function(result) {
-//   console.log("authorization function");
-//   // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-//   var token = result.credential.accessToken;
-//   // The signed-in user info.
-//   var user = result.user;
-//   // ...
-
-//   console.log("token + user = " + token + ": " + user)
-// }).catch(function(error) {
-//   // Handle Errors here.
-//   var errorCode = error.code;
-//   var errorMessage = error.message;
-
-//   console.log("error:  " + errorCode + ":  " + errorMessage);
-//   // The email of the user's account used.
-//   var email = error.email;
-//   // The firebase.auth.AuthCredential type that was used.
-//   var credential = error.credential;
-//   // ...
-// });
-
-
 
 var trnObject = {};
 var database = firebase.database();
 $("#editTrain").hide();
-
+$("#msgModal").hide();
 $("#addTrain-btn").on("click", function(event) {   
 
     var trnName = $("#trainName").val().trim();
@@ -72,9 +47,27 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     var trnStart = childSnapshot.val().start
     var trnFreq = childSnapshot.val().freq;
     var trnNext = nextTrainCalc(trnStart, trnFreq);
-    var trnWait = waitTrainCalc(trnNext);    
+    var trnWait = waitTrainCalc(trnNext);
+    var trnKey = [childSnapshot.key, trnName, trnDest, trnFreq, trnStart]    
 
-    $("#trainTable > tbody").append("<tr><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+
+    // try to stick more info behind the button (name dest start & freq)  copy code from github
+    // <a href="#" class="btn btn-primary btn-xs btnedit"><span "fa fa-pencil"></span></a>
+
+    $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+
+    $(".btn-edit").on("click", function() { 
+      var editTrainParam = $(this).context.id
+      console.log("pencil");
+      // console.log($(this));
+      console.log(editTrainParam);
+      editsch(editTrainParam)
+     
+
+      // if this works call the real function to edit trains
+      // if this does not work try document ready.
+    });
+
 
 });
 
@@ -126,104 +119,114 @@ function updateboard(){
       var trnFreq = childSnapshot.val().freq;
       var trnNext = nextTrainCalc(trnStart, trnFreq);
       var trnWait = waitTrainCalc(trnNext);    
+      var trnKey = [childSnapshot.key, trnName, trnDest, trnFreq, trnStart]   
 
-      $("#trainTable > tbody").append("<tr><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+
+      // $("#trainTable > tbody").append("<tr><td>" + '<button class="fa fa-pencil fa-action editbtn" id=' + trnKey + '></button>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+      // $("#trainTable > tbody").append("<tr><td>" + '<button class="fa fa-pencil fa-action editbtn" id=' + trnKey + '></button>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+      $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
     });
   });
+
+   $(".btn-edit").on("click", function() { 
+      var editTrainParam = $(this).context.id
+      console.log("pencil");
+      // console.log($(this));
+      console.log(editTrainParam);
+      editsch(editTrainParam)
+     
+
+      // if this works call the real function to edit trains
+      // if this does not work try document ready.
+    });
 };  // end of updateboard
 
+// '<i class="fa fa-pencil"></i>'
 
-$("#editSch").on("click", function(event) {
+ 
 
+    // $('#traintable').find('tr').click( function(){
+//     var row = $(this).find('td:first').text();
+//     alert('You clicked ' + row);
+// });
+//   // });
+
+
+// $('#trainTable').find('tr').click( function(){
+//   alert('You clicked row '+ ($(this).index()+1) );
+// });
+
+
+ // nearbyPlace.append('<span class="fa fa-bed fa-fw fa-action" style="font-size:18px"></span>')
+
+
+ $(".fa-action").on("click", function(event) { 
+  console.log("pencil")
+});
+
+
+function editsch(keyStuff) {
+
+    
+    var tempTrain = keyStuff.split(",")
+   
     $("#addTrain").hide();
     $("#editTrain").show();
-    $("#editSch").hide();
+    $("#trainNameEdit").val(tempTrain[1])
+    $("#trainDestinationEdit").val(tempTrain[2]);
+    $("#trainFirstTimeEdit").val(tempTrain[4]);
+    $("#trainFrequencyEdit").val(tempTrain[3]);
+    selectedKey = tempTrain[0]
 
-    database.ref().once('value', function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-      
-            var trnKey = childSnapshot.key
-            var trnName = childSnapshot.val().route;
-    
-            var option = $('<option>').val(trnKey).text(trnName);
-            option.data("trainData", childSnapshot.val());
-            option.appendTo('#trainNameSelect');
-
-            console.log("train key = " + trnKey);  // these are the keys of the trains
-
-        })  // end forEach loop - still in the once('value', function(snapshot) function
-    
-        $("#trainNameSelect").on("click", function(event) {    // clicked on dropdown list
-
-            var selectedKey = $("#trainNameSelect option:selected").val();
-            var selectedName = $("#trainNameSelect option:selected").text();
-            var tempTrainData = $("#trainNameSelect option:selected").data("trainData");
-          
-            $("#trainNameEdit").val(selectedName);
-            $("#trainDestinationEdit").val(tempTrainData.dest);
-            $("#trainFirstTimeEdit").val(tempTrainData.start);
-            $("#trainFrequencyEdit").val(tempTrainData.freq);
-            
-            $("#cancelEdit-btn").on("click", function(event){  // changed my mind don't want to edit
+    // populate name, dest, freq, start in div
+                    
+    $("#cancelEdit-btn").on("click", function(event) {  // changed my mind don't want to edit
+        // empty name, dest, freq, start in div
+        // hide what you need to hide
+        // show what you need to show
 
                 $("#addTrain").show();
                 $("#editTrain").hide();
                 $("#editSch").show();
 
-            });  // end cancelEdit
+      });  // end cancelEdit
 
-            $("#updateTrain-btn").on("click", function(event){  // changed my mind don't want to edit
+            // $("#updateTrain-btn").on("click", function(event){  
 
-              console.log("edit the train data")
+            //   console.log("edit the train data")
 
-              var trnName = $("#trainNameEdit").val().trim();
-              var trnDest = $("#trainDestinationEdit").val().trim();
-              var trnStart = moment($("#trainFirstTimeEdit").val().trim(), "HH:mm").format("HH:mm");
-              var trnFreq = $("#trainFrequencyEdit").val().trim();
+            //   var trnName = $("#trainNameEdit").val().trim();
+            //   var trnDest = $("#trainDestinationEdit").val().trim();
+            //   var trnStart = moment($("#trainFirstTimeEdit").val().trim(), "HH:mm").format("HH:mm");
+            //   var trnFreq = $("#trainFrequencyEdit").val().trim();
 
-              var newTrain = {
-                route: trnName,
-                dest: trnDest,
-                start: trnStart,
-                freq: trnFreq
-              };
+            //   var newTrain = {
+            //     route: trnName,
+            //     dest: trnDest,
+            //     start: trnStart,
+            //     freq: trnFreq
+            //   };
 
-            });  // end update train
+            // });  // end update train
 
-            $("#deleteTrain-btn").on("click", function(event){
+            $("#deleteTrain-btn").on("click", function(event) {
                 console.log("delete train");
                 console.log("selected Key " + selectedKey);
-               
+      
+                $("#modal-message").text("Are you sure you want to delete train " + tempTrain[1] +"?")
+                $("#msgModal").modal("show");
 
-               // database.ref().on(selectedKey).remove();
-               // database.ref().remove(selectedKey);
-                // console.log(database().ref().child(selectedKey))
-                
-                //  WARNING DON'T DO THE NEXT LINES IT DELETES ALL THE DATA !!!!!!!!!!!!!!!!!!
-                // database.ref(selectedKey).remove()   // don't do this is deletes all the data
-                  // database.ref(selectedKey).remove()   // don't do this is deletes all the data
-                   // database.ref().child(selectedKey).set(null);  // don't do this is deletes all the data
-                
-                  console.log ("what to delete:  " + "advanced-train-schedule/" + selectedKey);
+                $("#yes-btn").on("click", function(event) {
+                  database.ref().child(selectedKey).remove(); 
+                  $("#trainNameEdit").val("");
+                  $("#trainDestinationEdit").val("");
+                  $("#trainFirstTimeEdit").val("");
+                  $("#trainFrequencyEdit").val("");
+                  updateboard()
+                });
 
-                  // this does nothing.  if done in the console log it gets a promise
-                  // but does not actually delete the data
-                  database.ref("advanced-train-schedule/" + selectedKey).set(null);  
-  
+    
+              })  // end of delete train on click event
+    
 
-// code from firebase website
-// var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
-// starCountRef.on('value', function(snapshot) {
-//   updateStarCount(postElement, snapshot.val());
-// });
-
-                // selectedKey.remove();
-
-
-            });  // end of delete
-
-        });  // end of train edit function
-
-    });  // end of getting snapshot
-
-}); // end of edit function
+        };  // end of train edit function

@@ -9,6 +9,7 @@
 
 
     <!-- Style sheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -29,6 +30,7 @@
             <table class="table table-striped table-hover table-style" id="trainTable">
                 <thead>
                     <tr>
+                        <th>Edit</th>
                         <th>Train Name</th>
                         <th>Destination</th>
                         <th>First Train</th>
@@ -42,7 +44,7 @@
                     <!-- body is populated from database -->
                 </tbody>
             </table> 
-            <a href="#" class="btn btn-info btn-xs" id="editSch">Edit Train Schedule</a>
+            <!-- <a href="#" class="btn btn-info btn-xs" id="editSch">Edit Train Schedule</a> -->
         </div>
     </div>
 
@@ -82,11 +84,7 @@
         <div class="panel-body">
 
             <div class="form-group container-fluid">
-                <div class = "row">
-                    <label class ="label-align col-md-3">Select a train to edit:</label>
-                    <select class="input-style col-md-6" id="trainNameSelect" type="select"></select>
-                </div>
-                <br>
+               
                 <div class="row">
                     <label class ="label-align col-md-3">Train Name:</label>
                     <input class="input-style col-md-6" id="trainNameEdit" type="text"></select>
@@ -110,8 +108,30 @@
             </div>
         </div>
     </div>
+    <div id="msgModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title" id="msgModaltitle"><span class="fa fa-exclamation-triangle" style="font-size:24px"></span> </h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-message">
+            <!-- populated by JavaScript -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default close-yes" id="yes-btn" data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-default close-no" id="no=btn" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
     <script src='assets/javascript/trainSchedule.js', type="text/javascript"></script>
