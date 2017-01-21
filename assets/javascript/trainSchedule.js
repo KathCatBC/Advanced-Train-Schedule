@@ -47,11 +47,11 @@ $("#sign-up-btn").on("click", function(event) {
 
 $("#sign-out-btn").on("click", function(event) {
     firebase.auth().signOut();
+    $("#log-in-panel").show()
     $("#inputEmail").val("");
     $("#inputPassword").val("");
-    $("#button-row").show();
-    $("#sign-in-btn").show();
-    $("#sign-up-btn").show();
+    // $("#sign-in-btn").show();
+    // $("#sign-up-btn").show();
     $(".schedule-panel").hide();
     $("#addTrain").hide();
     $("#editTrain").hide();
