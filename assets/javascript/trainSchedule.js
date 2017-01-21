@@ -114,7 +114,8 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     var trnWait = waitTrainCalc(trnNext);
     var trnKey = [childSnapshot.key, trnName, trnDest, trnFreq, trnStart]    
 
-    $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+    $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit <span class='fa fa-pencil' style='font-size:15px'></span> id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td;4><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+    // $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
 
     $(".btn-edit").on("click", function() { 
         var editTrainParam = $(this).context.id
