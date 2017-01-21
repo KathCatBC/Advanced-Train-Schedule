@@ -71,6 +71,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         $(".logout-panel").show();
     } else {
         console.log("is this all handled in the logout?")
+        $("#modal-message-ok").text("Log in error, please try again.")
+        $("#msgModal-ok").modal("show");
     }
 })
 
