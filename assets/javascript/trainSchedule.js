@@ -14,6 +14,7 @@ $(".schedule-panel").hide();
 $("#addTrain").hide();
 $("#editTrain").hide();
 $("#msgModal").hide();
+$("#msgModal-ok").hide();
 $(".logout-panel").hide();
 
 
@@ -23,13 +24,11 @@ $("#sign-in-btn").on("click", function(event) {
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(txtEmail, txtPass);
     promise.catch(e => {
-        $("#modal-message").text(e.message);
-        $("#no-btn").hide();
-        $("#yes-btn").hide();
-        $("#msgModal").modal("show");
+        $("#modal-message-ok").text(e.message);
+        $("#msgModal-ok").modal("show");
     });
 });   
-
+;
 
 $("#sign-up-btn").on("click", function(event) {
     const txtEmail = $("#inputEmail").val();
@@ -37,10 +36,8 @@ $("#sign-up-btn").on("click", function(event) {
     const auth = firebase.auth();
     const promise = auth.createUserWithEmailAndPassword(txtEmail, txtPass);
     promise.catch(e => {
-        $("#modal-message").text(e.message);
-        $("#no-btn").hide();
-        $("#yes-btn").hide();
-        $("#msgModal").modal("show");
+        $("#modal-message-ok").text(e.message);
+        $("#msgModal-ok").modal("show");
     });
 });
 
@@ -55,33 +52,25 @@ $("#sign-out-btn").on("click", function(event) {
     $(".schedule-panel").hide();
     $("#addTrain").hide();
     $("#editTrain").hide();
-    $("#modal-message").text("Log out successful.")
-    $("#no-btn").hide();
-    $("#yes-btn").hide();
-    $("#msgModal").modal("show");
+    $("#modal-message-ok").text("Log out successful.")
+    $("#msgModal-ok").modal("show");
 
 })      
 
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        $("#sign-out-btn").show();
         $("#sign-up-btn").hide();
         $("#sign-in-btn").hide();
         $(".schedule-panel").show();
         $("#addTrain").show();
         $("#log-in-panel").hide();
-        $("#modal-message").text("You have successfully logged in.")
-        $("#no-btn").hide();
-        $("#yes-btn").hide();
-        $("#msgModal").modal("show");
+        $("#modal-message-ok").text("You have successfully logged in.")
+        $("#msgModal-ok").modal("show");
+        $("#sign-out-btn").show();
         $(".logout-panel").show();
     } else {
-        $(".schedule-panel").hide();
-        $("#addTrain").hide();
-        $("#editTrain").hide();
-        $("#msgModal").hide();
-        $(".logout-panel").hide();
+        console.log("is this all handled in the logout?")
     }
 })
 
@@ -238,8 +227,7 @@ function editsch(keyStuff) {
     $("#deleteTrain-btn").on("click", function(event) {     
         $("#yes-btn").show();
         $("#no-btn").show()
-        $("#modal-message").text("Are you sure you want to delete train " + tempTrain[1] +"?")
-        $("#ok-btn").hide();
+        $("#modal-message").text("Are you sure you want to delete train " + tempTrain[1] +"?");
         $("#msgModal").modal("show");
 
         $("#yes-btn").on("click", function(event) {
