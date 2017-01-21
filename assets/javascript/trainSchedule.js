@@ -13,8 +13,8 @@ firebase.initializeApp(config);
 $(".schedule-panel").hide();
 $("#addTrain").hide();
 $("#editTrain").hide();
-$("#msgModal").hide();
-$("#msgModal-ok").hide();
+// $("#msgModal").hide();
+// $("#msgModal-ok").hide();
 $(".logout-panel").hide();
 
 
@@ -28,7 +28,7 @@ $("#sign-in-btn").on("click", function(event) {
         $("#msgModal-ok").modal("show");
     });
 });   
-;
+
 
 $("#sign-up-btn").on("click", function(event) {
     const txtEmail = $("#inputEmail").val();
@@ -70,9 +70,13 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         $("#sign-out-btn").show();
         $(".logout-panel").show();
     } else {
-        console.log("is this all handled in the logout?")
-        $("#modal-message-ok").text("Log in error, please try again.")
-        $("#msgModal-ok").modal("show");
+        $(".schedule-panel").hide();
+        $("#addTrain").hide();
+        $("#editTrain").hide();
+        // $("#msgModal").hide();
+        $(".logout-panel").hide();
+        // $("#modal-message-ok").text("Log in error, please try again.")
+        // $("#msgModal-ok").modal("show");
     }
 })
 
