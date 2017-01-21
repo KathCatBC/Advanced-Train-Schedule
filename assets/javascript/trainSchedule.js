@@ -13,8 +13,6 @@ firebase.initializeApp(config);
 $(".schedule-panel").hide();
 $("#addTrain").hide();
 $("#editTrain").hide();
-// $("#msgModal").hide();
-// $("#msgModal-ok").hide();
 $(".logout-panel").hide();
 
 
@@ -54,8 +52,7 @@ $("#sign-out-btn").on("click", function(event) {
     $("#editTrain").hide();
     $("#modal-message-ok").text("Log out successful.")
     $("#msgModal-ok").modal("show");
-
-})      
+});     
 
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
@@ -73,12 +70,9 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         $(".schedule-panel").hide();
         $("#addTrain").hide();
         $("#editTrain").hide();
-        // $("#msgModal").hide();
         $(".logout-panel").hide();
-        // $("#modal-message-ok").text("Log in error, please try again.")
-        // $("#msgModal-ok").modal("show");
     }
-})
+});
 
 
 var trnObject = {};
@@ -181,7 +175,8 @@ function updateboard(){
             var trnWait = waitTrainCalc(trnNext);    
             var trnKey = [childSnapshot.key, trnName, trnDest, trnFreq, trnStart]   
 
-            $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+            $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn fa fa-pencil" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
+            //  $("#trainTable > tbody").append("<tr><td>" + '<a href="#" class="btn btn-primary btn-sm btn-edit" id=' + trnKey + '></a>' + "</td><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnStart + "</td><td>" + trnFreq + "</td><td>" + trnNext + "</td><td>" + trnWait + "</td></tr>");
         });
     });
 
