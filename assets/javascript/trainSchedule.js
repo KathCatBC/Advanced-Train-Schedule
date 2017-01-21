@@ -35,7 +35,12 @@ $("#sign-up-btn").on("click", function(event) {
     const txtPass = $("#inputPassword").val();
     const auth = firebase.auth();
     const promise = auth.createUserWithEmailAndPassword(txtEmail, txtPass);
-    promise.catch(e => console.log(e.message));
+    promise.catch(e => {
+        $("#modal-message").text(e.message);
+        $("#no-btn").hide();
+        $("#yes-btn").hide();
+        $("#msgModal").modal("show");
+    });
 });
 
 $("#sign-out-btn").on("click", function(event) {
