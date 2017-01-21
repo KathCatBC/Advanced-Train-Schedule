@@ -49,6 +49,7 @@ $("#sign-out-btn").on("click", function(event) {
     firebase.auth().signOut();
     $("#inputEmail").val("");
     $("#inputPassword").val("");
+    
     $("#log-in-panel").show();
     $(".schedule-panel").hide();
     $("#addTrain").hide();
@@ -57,6 +58,7 @@ $("#sign-out-btn").on("click", function(event) {
     $("#no-btn").hide();
     $("#yes-btn").hide();
     $("#msgModal").modal("show");
+
 })      
 
 
