@@ -50,8 +50,8 @@ $("#sign-out-btn").on("click", function(event) {
     $("#log-in-panel").show()
     $("#inputEmail").val("");
     $("#inputPassword").val("");
-    // $("#sign-in-btn").show();
-    // $("#sign-up-btn").show();
+    $("#sign-in-btn").show();
+    $("#sign-up-btn").show();
     $(".schedule-panel").hide();
     $("#addTrain").hide();
     $("#editTrain").hide();
