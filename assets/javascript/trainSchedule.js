@@ -143,7 +143,7 @@ function nextTrainCalc(firstTrain, scheduled) {
 
 function waitTrainCalc(waiting) {
 
-    var now = moment().format("HH:mm")
+    // var now = moment().format("HH:mm")
     var trnHr = Number(waiting.substr(0,2));
     var trnMin = Number(waiting.substr(3, 2));
   
@@ -152,6 +152,10 @@ function waitTrainCalc(waiting) {
     var nowMin = Number(now.substr(3,2));
 
     var waiting = (((trnHr*60) + trnMin)-((nowHr*60) + nowMin))
+
+    if (waiting < 0) {
+        waiting = (((24*60) - (nowHr*60 + nowMin)) + ((trnHr*60) + trnMin))
+    }
 
     return(waiting)
 
