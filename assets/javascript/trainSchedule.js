@@ -15,7 +15,7 @@ $("#addTrain").hide();
 $("#editTrain").hide();
 $("#msgModal").hide();
 $(".logout-panel").hide();
-debugger
+
 
 $("#sign-in-btn").on("click", function(event) {
     const txtEmail = $("#inputEmail").val();
@@ -30,6 +30,7 @@ $("#sign-in-btn").on("click", function(event) {
     });
 });   
 
+
 $("#sign-up-btn").on("click", function(event) {
     const txtEmail = $("#inputEmail").val();
     const txtPass = $("#inputPassword").val();
@@ -43,8 +44,11 @@ $("#sign-up-btn").on("click", function(event) {
     });
 });
 
+
 $("#sign-out-btn").on("click", function(event) {
     firebase.auth().signOut();
+    $("#inputEmail").val("");
+    $("#inputPassword").val("");
     $("#log-in-panel").show();
     $(".schedule-panel").hide();
     $("#addTrain").hide();
@@ -54,6 +58,7 @@ $("#sign-out-btn").on("click", function(event) {
     $("#yes-btn").hide();
     $("#msgModal").modal("show");
 })      
+
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
@@ -68,18 +73,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         $("#yes-btn").hide();
         $("#msgModal").modal("show");
         $(".logout-panel").show();
-
-
-        console.log(firebaseUser);
-
     } else {
         $(".schedule-panel").hide();
         $("#addTrain").hide();
         $("#editTrain").hide();
         $("#msgModal").hide();
         $(".logout-panel").hide();
-      
-        console.log("not logged in")
     }
 })
 
@@ -234,6 +233,8 @@ function editsch(keyStuff) {
 
 
     $("#deleteTrain-btn").on("click", function(event) {     
+        $("#yes-btn").show();
+        $("#no-btn").show()
         $("#modal-message").text("Are you sure you want to delete train " + tempTrain[1] +"?")
         $("#ok-btn").hide();
         $("#msgModal").modal("show");
